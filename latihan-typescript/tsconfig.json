@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "target": "es6",                // Versi ECMAScript yang dihasilkan
+    "module": "commonjs",           // Sistem modul
+    "strict": true,                 // Mengaktifkan pemeriksaan ketat
+    "outDir": "./dist",             // Folder output
+    "rootDir": "./src"              // Folder sumber
+  },
+  "include": ["src/**/*"],          // Mengikutkan semua file dalam folder src
+  "exclude": ["node_modules"]       // Mengecualikan folder node_modules
+}
