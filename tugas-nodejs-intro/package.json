@@ -1,0 +1,15 @@
+{
+  "name": "tugas-nodejs-intro",
+  "version": "1.0.0",
+  "description": "1. Buat program Node.js sederhana yang membaca file teks dan mencetak isinya ke konsol.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.1"
+  }
+}

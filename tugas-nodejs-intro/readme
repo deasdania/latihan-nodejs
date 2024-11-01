@@ -1,0 +1,35 @@
+
+1. Buat program Node.js sederhana yang membaca file teks dan mencetak isinya ke konsol.
+
+run the `helloworlds.js` file
+
+```
+node helloworlds.js
+```
+
+2. Buat server HTTP sederhana dengan Node.js yang merespons "Hello, World!" untuk setiap permintaan.
+[this gdocs can be reference](https://docs.google.com/document/d/1KOfoZ_kyapIB_sFJsncjPTxEypQ005vu7dKiipiSWwU/edit?usp=sharing
+)
+
+run this command bellow for dependencies
+
+```
+npm install
+```
+
+run the `app.js` file
+
+```
+node app.js
+```
+
+
+3. Buat modul Node.js yang mengekspor fungsi untuk menjumlahkan dua angka, dan impor modul tersebut di file lain.
+ 
+run the `app.js` file
+
+```
+node app.js
+```
+
+This file will log the the sum for 5 and 10 
