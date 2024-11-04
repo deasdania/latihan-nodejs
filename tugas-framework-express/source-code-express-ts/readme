@@ -1,0 +1,11 @@
+
+
+
+npm install --save-dev tsconfig-paths
+
+node js can not run ts directly
+npx tsc
+
+support JSX and TSX
+deno?
+bun.sh
