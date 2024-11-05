@@ -1,65 +1,48 @@
-import { Product } from "./models/product";
-import { User } from "./models/user";
-import { Order } from "./models/order";
-import * as productService from "./services/productService";
-import * as userService from "./services/userService";
-import * as orderService from "./services/orderService";
-import { validate } from "./utils/validate";
-import { productSchema } from "./schemas/productSchema";
-import { userSchema } from "./schemas/userSchema";
-import { orderSchema } from "./schemas/orderSchema";
+import express from "express";
+import { initializeData } from "./dataInitializer";
+import { getCategory, createCategory, updateCategory, deleteCategory } from "./controllers/categoryController";
+import { searchProductsByName, getProductsByCategory } from "./controllers/productController";
 
-let products: Product[] = [];
-let users: User[] = [];
-let orders: Order[] = [];
+const PORT = 3000;
 
-const newProduct: Product = {
-  id: 1,
-  name: "Laptop",
-  description: "High performance laptop",
-  price: 1500,
-  category: "Electronics",
-  stock: 100
-};
+// Start Express app
+async function init() {
+  // Initialize data
+  const { categories, products, users, orders } = initializeData();
+  const app = express();
 
-if (validate(newProduct, productSchema)) {
-  products = productService.addProduct(products, newProduct);
-} else {
-  console.log("Invalid product data");
+  app.use(express.json());
+
+  // Route for categories
+  app.get("/api/categories", (req, res) => {
+    getCategory(categories, req, res); 
+  });
+  app.get("/api/categories/:id", (req, res) => {
+    getCategory(categories, req, res); 
+  });
+  app.post("/api/categories", (req, res) => {
+    createCategory(categories, req, res); 
+  });
+  app.put("/api/categories/:id", (req, res) => {
+    updateCategory(categories, req, res); 
+  });
+  app.delete("/api/categories/:id", (req, res) => {
+    deleteCategory(categories, req, res); 
+  });
+
+
+  // Route for products
+  app.get("/api/products/search", (req, res) => {
+    searchProductsByName(products, req, res); 
+  });
+  app.get("/api/products/category/:category", (req, res) => {
+    getProductsByCategory(products, req, res); 
+  });
+
+
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+  });
 }
 
-const newUser: User = {
-  id: 1,
-  name: "John Doe",
-  email: "john.doe@example.com",
-  password: "securepassword",
-  address: "123 Main St"
-};
-
-if (validate(newUser, userSchema)) {
-  users = userService.addUser(users, newUser);
-} else {
-  console.log("Invalid user data");
-}
-
-const newOrder: Order = {
-  id: 1,
-  userId: 1,
-  products: [{ productId: 1, quantity: 1 }],
-  totalAmount: 1500,
-  orderDate: new Date(),
-  status: "pending"
-};
-
-if (validate(newOrder, orderSchema)) {
-  orders = orderService.placeOrder(orders, newOrder);
-} else {
-  console.log("Invalid order data");
-}
-
-console.log(productService.getProducts(products));
-console.log(userService.getUsers(users));
-console.log(orderService.getOrders(orders));
-
-orders = orderService.updateOrderStatus(orders, 1, "shipped");
-console.log(orderService.getOrders(orders));
+init();
