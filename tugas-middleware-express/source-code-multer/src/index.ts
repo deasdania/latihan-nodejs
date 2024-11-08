@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import fileUpload from 'express-fileupload';
 import fs from 'fs';
 import { handleUpload } from './utils/cloudinary';
+import router from './routes/api';
 
 // Set up the port for the server
 const port: number = 3000;
@@ -14,6 +15,8 @@ app.use(
         tempFileDir: 'uploads',
     })
 );
+
+app.use("/api", router);
 
 // POST route to handle file uploads
 app.post('/upload', async (req: Request, res: Response) => {

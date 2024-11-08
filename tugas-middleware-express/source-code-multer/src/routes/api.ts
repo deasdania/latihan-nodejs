@@ -1,10 +1,11 @@
 import express from "express";
 
-import { single, multiple } from "../middlewares/upload.middleware";
+import uploadMiddleware from "../middlewares/upload.middleware";
+import uploadController from "../controllers/upload.controller";
 
 const router = express.Router();
 
-router.get("/upload/single", single, (req, res) => {});
-router.get("/upload/multiple", multiple, (req, res) => {});
+router.post("/upload", uploadMiddleware.single, uploadController.single);
+router.post("/uploads", uploadMiddleware.multiple, uploadController.multiple);
 
 export default router;
