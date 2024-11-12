@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { Category } from "./categories.model";
 
 const Schema = mongoose.Schema;
 
@@ -10,30 +9,34 @@ export interface Product {
   images: string[];
   price: number;
   qty: number;
-  category: Category;
+  category: mongoose.Types.ObjectId;
 }
-
-const ProductsSchema = new Schema<Product>(
+const ProductsSchema = new Schema(
   {
     name: {
       type: Schema.Types.String,
       required: true,
     },
     description: {
-      type: Schema.Types.String, 
+      type: Schema.Types.String,
       required: true,
     },
     images: {
       type: [Schema.Types.String],
-      default: [],
+      required: true,
     },
     price: {
-      type: Schema.Types.Number,
+      type: Number,
       required: true,
     },
     qty: {
-      type: Schema.Types.Number,
+      type: Number,
       required: true,
+      min: [1, "Quantity can not be less than 1"],
+    },
+    slug: {
+      type: Schema.Types.String,
+      unique: true,
     },
     category: {
       type: Schema.Types.ObjectId,
@@ -44,6 +47,14 @@ const ProductsSchema = new Schema<Product>(
     timestamps: true,
   }
 );
+
+ProductsSchema.pre("save", function (next) {
+  const product = this;
+  if (!product.slug) {
+    product.slug = product.name.toLowerCase().split(" ").join("-");
+  }
+  next();
+});
 
 const ProductsModel = mongoose.model("Products", ProductsSchema);
 
